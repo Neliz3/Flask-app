@@ -20,11 +20,11 @@ def login():
         session.permanent = True
         user = request.form["nm"]
         session["user"] = user
-        flash(f"Login successful", "info")
+        flash("Login successful", "info")
         return redirect(url_for("users"))
     else:
         if "user" in session:
-            flash(f"Already logged!", "info")
+            flash("Already logged!", "info")
             return redirect(url_for("users"))
 
         return render_template("login.html")
@@ -36,7 +36,7 @@ def users():
         user = session["user"]
         return render_template("user.html", user=user)
     else:
-        flash(f"You're not logged in", "info")
+        flash("You're not logged in", "info")
         return redirect(url_for("login"))
 
 
