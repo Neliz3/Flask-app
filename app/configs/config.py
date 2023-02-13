@@ -4,4 +4,4 @@ import os
 # Initialize environment variables
 load_dotenv('/home/elizabeth/flask-app/app/configs/.env')
 
-secret_key = os.getenv("SECRET_KEY")
+secret_key = os.urandom(12)
