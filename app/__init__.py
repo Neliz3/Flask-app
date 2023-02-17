@@ -15,7 +15,8 @@ db = SQLAlchemy()
 db.init_app(app)
 
 
-from app import general
 from app import admin
 from app import auth
+from app import general
+from app import user
 from app import models

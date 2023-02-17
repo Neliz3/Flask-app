@@ -17,13 +17,14 @@ def login():
                 session.permanent = True
                 user = found_user.name
                 session["user"] = user
+                session["email"] = email
                 flash("Login successful", "info")
 
                 # Authorization
                 if email == admin:
                     return redirect(url_for("admin.view"))
                 else:
-                    return redirect(url_for("general.users"))
+                    return redirect(url_for("user.users"))
             else:
                 flash("You entered a wrong password. Try again, please.", "info")
                 return redirect(url_for("auth.login"))
@@ -31,9 +32,13 @@ def login():
             flash("You are a new user. Welcome to registration page :)", "info")
             return redirect(url_for("auth.registration"))
     else:
-        if "user" in session:
+        if "email" in session:
             # autocompleting
-            return redirect(url_for("general.users"))
+            email = session["email"]
+            if email == admin:
+                return redirect(url_for("admin.view"))
+            else:
+                return redirect(url_for("user.users"))
         return render_template("auth/login.html")
 
 
@@ -50,13 +55,13 @@ def registration():
         db.session.commit()
 
         session.permanent = True
-        session["user"] = name
+        session["email"] = email
 
         flash("Thanks for the registration!")
         if email == admin:
-            return redirect(url_for("general.view"))
+            return redirect(url_for("admin.view"))
         else:
-            return redirect(url_for("general.users"))
+            return redirect(url_for("user.users"))
     else:
         return render_template("auth/signup.html")
 
